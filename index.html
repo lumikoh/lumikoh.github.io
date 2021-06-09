@@ -174,7 +174,7 @@
 
         <div id="overlay-delete-char" class="overlay">
             <div class="confirm">
-                <div class="buyTitle">Are you sure you want delete:</div>
+                <div class="ol-title">Are you sure you want delete:</div>
                 <div id="char-to-delete"></div>
                 <div @pointerdown="deleteCharacter(activeChar)" class="popupButton">Yes</div>
                 <div @pointerdown="hideOverlay('overlay-delete-char')" class="popupButton">Cancel</div>
@@ -182,7 +182,7 @@
         </div>
         <div id="overlay-purchase" class="overlay">
             <div class="confirm">
-                <div class="buyTitle">Amount to buy :</div>
+                <div class="ol-title">Amount to buy :</div>
                 <div class="refreshStock fas fa-redo-alt" @pointerdown="showResetStockOverlay()" title="Reset stock"></div>
                 <div id="amountToBuy" @blur="editItemBought(activeItem, $event)" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" tabindex="0"></div>
                 <div id="buyButton" @pointerdown="buyItem()" class="popupButton">Buy</div>
@@ -191,7 +191,7 @@
         </div>
         <div id="overlay-reset-stock" class="overlay">
             <div class="confirm">
-                <div class="buyTitle">Are you sure you want to reset the stock for this item?</div>
+                <div class="ol-title">Are you sure you want to reset the stock for this item?</div>
                 <div id="item-to-reset"></div>
                 <div class="popupButton" @pointerdown="resetStock()">Confirm</div>
                 <div class="popupButton" @pointerdown="hideOverlay('overlay-reset-stock')">Cancel</div>
