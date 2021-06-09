@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<title>Neo Shops</title>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <link rel="stylesheet" href="style.css?version=0.502">
+    <script src="script_v3.js" defer></script>
+    <script src="vue.global.prod.js"></script>
+    <script src="https://kit.fontawesome.com/77eeb2afe3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="app">
+
+        <div class="banner"></div>
+
+        <div class="top">
+            <div id="time" title="Event time left">
+                <div class="timeleft">Time left:</div>
+                <div class="weeks">Weeks:</div>
+                <div id="weeksNumber"></div>
+                <div class="days">Days:</div>
+                <div id="daysNumber"></div>
+                <div class="hours">Hours:</div>
+                <div id="hoursNumber"></div>
+            </div>
+    
+            <div class="characters">
+                <div class="character" v-for="(character, index) in SHARED_characters" :class="{ active: character.isActive }" :key="character.id" >
+                    <div class="char-name" spellcheck="false" @pointerdown="setCurrentChar(character)" @blur="editCharName(character, $event)" @keydown.enter.prevent="editCharName(character, $event)">{{character.name}}</div>
+                    <div class="char-edit fas fa-pen" v-if="character.isActive" @pointerdown="editCharButton($event)" title="Edit character name"></div>
+                    <div class="char-delete fas fa-trash" v-if="character.isActive" @pointerdown="showDeleteCharOverlay(character)" title="Delete character"></div>
+                </div>
+                <form id="addCharacter" @submit.prevent="addCharacter($event)">
+                    <input title="Add character name" type="text" id="inputItem" placeholder="+" autocomplete="off" v-model="input" @blur="input = ''">
+                </form>
+            </div>
+        </div>
+
+        <div id="shops">
+            
+            <!--  SHARED SHOPS  -->
+
+            <!--  NEO CORE SHOP  --> 
+            <div class="shop">
+                <div class="shop-info">
+                    <div></div>
+                    <div>Current</div>
+                    <div>Needed</div>
+                    <div></div>
+                </div>
+                <div class="header">
+                    <img src="img/neo-core.png" class="img">
+                    <div class="title">Neo Core Shop</div>
+                    <div class="current-currency" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editCurrentCurrency($event, 'core')" @keydown.enter.prevent="editCurrentCurrency($event, 'core')">{{currentCores}}</div>
+                    <div class="needed-currency">{{neededCores}}</div>
+                    <div class="toggle fas fa-caret-down" @pointerdown="openShop($event)" title="Show shop items"></div>
+                </div>
+                <div class="items inactive">
+                    <div class="item-info">
+                        <div class="name">Item name</div>
+                        <div>Price</div>
+                        <div>Wanted</div>
+                        <div>Stock</div>
+                        <div>Buy</div>
+                    </div>
+                    <div class="item tooltip" v-for="item in SHARED_neoCoreItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
+                        <img :src="item.image" alt="?">
+                        <div class="name">{{ item.name }}</div>
+                        <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
+                        <div class="price">{{ item.cost }}</div>
+                        <img class="price-image" src="img/neo-core.png">
+                        <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
+                        <div class="remain">{{ handleRemain(item) }}</div>
+                        <div class="buyItem fas fa-cart-arrow-down" @pointerdown="showPurchaseOverlay(item, $event)" title="Buy"></div>
+                    </div> 
+                </div>
+            </div>
+            
+            <!--  MESO SHOP  --> 
+            <div class="shop">
+                <div class="header">
+                    <img src="img/meso.png" class="img">
+                    <div class="title">Meso Shop</div>
+                    <div></div>
+                    <div class="needed-currency">{{ abbreviateNumber(neededMesos)}}</div>
+                    <div class="toggle fas fa-caret-down" @pointerdown="openShop($event)" title="Show shop items"></div>
+                </div>
+                <div class="items inactive">
+                    <div class="item-info">
+                        <div class="name">Item name</div>
+                        <div>Price</div>
+                        <div>Wanted</div>
+                        <div>Stock</div>
+                        <div>Buy</div>
+                    </div>
+                    <div class="item" v-for="item in SHARED_mesoItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
+                        <img :src="item.image" alt="?">
+                        <div class="name">{{ item.name }}</div>
+                        <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
+                        <div class="price">{{ abbreviateNumber(item.cost) }}</div>
+                        <img class="price-image" src="img/meso.png">
+                        <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
+                        <div class="remain">{{ handleRemain(item) }}</div>
+                        <div class="buyItem fas fa-cart-arrow-down" @pointerdown="showPurchaseOverlay(item, $event)" title="Buy"></div>
+                    </div> 
+                </div>
+            </div>  <!--  SHARED SHOPS END  -->
+             
+            <!--  PER CHAR SHOPS  --> 
+            <div v-for="(character, charIndex) in SHARED_characters">
+                
+                <!--  NEO GEM SHOP  --> 
+                <div class="shop" v-if="character.isActive">  
+                    <div class="header">
+                        <img src="/img/neo-gem.png" class="img">
+                        <div class="title">Neo Gem Shop</div>
+                        <div class="current-currency" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editCurrentCurrency($event, 'gem', character)" @keydown.enter.prevent="editCurrentCurrency($event, 'gem', character)">{{character.currentGems}}</div>
+                        <div class="needed-currency">{{neededGems}}</div>
+                        <div class="toggle fas fa-caret-down" @pointerdown="openShop($event)" title="Show shop items"></div>
+                    </div>
+                    <div class="items inactive">
+                        <div class="item-info">
+                            <div class="name">Item name</div>
+                            <div>Price</div>
+                            <div>Wanted</div>
+                            <div>Stock</div>
+                            <div>Buy</div>
+                        </div>
+                        <div class="item" v-for="item in character.PER_CHARACTER_neoGemItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
+                            <img :src="item.image" alt="?">
+                            <div class="name">{{ item.name }}</div>
+                            <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
+                            <div class="price">{{ item.cost }}</div>
+                            <img class="price-image" src="img/neo-gem.png">
+                            <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
+                            <div class="remain">{{ handleRemain(item) }}</div>
+                            <div class="buyItem fas fa-cart-arrow-down" @pointerdown="showPurchaseOverlay(item, $event)" title="Buy"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  NEO STONE SHOP  --> 
+                <div class="shop" v-if="character.isActive">  
+                    <div class="header">
+                        <img src="/img/neo-stone.png" class="img">
+                        <div class="title">Neo Stone Shop</div>
+                        <div class="current-currency" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editCurrentCurrency($event, 'stone', character)" @keydown.enter.prevent="editCurrentCurrency($event, 'stone', character)">{{character.currentStones}}</div>
+                        <div class="needed-currency">{{neededStones}}</div>
+                        <div class="toggle fas fa-caret-down" @pointerdown="openShop($event)" title="Show shop items"></div>
+                    </div>
+                    <div class="items inactive">
+                        <div class="item-info">
+                            <div class="name">Item name</div>
+                            <div>Price</div>
+                            <div>Wanted</div>
+                            <div>Stock</div>
+                            <div>Buy</div>
+                        </div>
+                        <div class="item" v-for="item in character.PER_CHARACTER_neoStoneItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
+                            <img :src="item.image" alt="?">
+                            <div class="name">{{ item.name }}</div>
+                            <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
+                            <div class="price">{{ item.cost }}</div>
+                            <img class="price-image" src="img/neo-stone.png">
+                            <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
+                            <div class="remain">{{ handleRemain(item) }}</div>
+                            <div class="buyItem fas fa-cart-arrow-down" @pointerdown="showPurchaseOverlay(item, $event)" title="Buy"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>  <!--  PER CHAR SHOPS END  --> 
+
+        </div>  <!--  ID:SHOPS END  --> 
+
+        <div id="overlay-delete-char" class="overlay">
+            <div class="confirm">
+                <div class="buyTitle">Are you sure you want delete:</div>
+                <div id="char-to-delete"></div>
+                <div @pointerdown="deleteCharacter(activeChar)" class="popupButton">Yes</div>
+                <div @pointerdown="hideOverlay('overlay-delete-char')" class="popupButton">Cancel</div>
+            </div>
+        </div>
+        <div id="overlay-purchase" class="overlay">
+            <div class="confirm">
+                <div class="buyTitle">Amount to buy :</div>
+                <div class="refreshStock fas fa-redo-alt" @pointerdown="showResetStockOverlay()" title="Reset stock"></div>
+                <div id="amountToBuy" @blur="editItemWanted(activeItem, $event)" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" tabindex="0"></div>
+                <div id="buyButton" @pointerdown="buyItem()" class="popupButton">Buy</div>
+                <div id="cancelButton" @pointerdown="hideOverlay('overlay-purchase')" class="popupButton">Cancel</div>
+            </div>
+        </div>
+        <div id="overlay-reset-stock" class="overlay">
+            <div class="confirm">
+                <div class="buyTitle">Are you sure you want to reset the stock for this item?</div>
+                <div id="item-to-reset"></div>
+                <div class="popupButton" @pointerdown="resetStock()">Confirm</div>
+                <div class="popupButton" @pointerdown="hideOverlay('overlay-reset-stock')">Cancel</div>
+            </div>
+        </div>
+
+        
+
+        
+        
+    </div>
+</body>
+</html>

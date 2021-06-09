@@ -1,0 +1,503 @@
+:root {
+    --test: calc(100% - 50px);
+    --darkest: rgb(28, 3, 6);
+    --red: rgb(75, 7, 16);
+    --purple: rgb(116,30,57);
+    --green: rgb(37,98,9);
+    --darkgreen: rgb(27,68,6);
+    --bordercolor: rgb(236,106,83);
+  }
+
+/** DEFAULT OVERRIDES **/
+
+/* @media (max-width:640px) {
+    html, body {
+        background-attachment: scroll!important;
+        background-size: 100vw 1px!important;
+    }
+} */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #BBBBC3;
+    color: whitesmoke;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size:100%;
+    background: linear-gradient(139deg, rgba(215,52,21,1) 0%, rgb(29,3,2) 100%); 
+    background-attachment: fixed;
+}
+
+
+#time span {
+    padding-left: 0.25rem;
+    
+
+}
+
+img {
+    user-select: none;
+}
+
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+    cursor: text;
+    background-color: var(--purple);
+    box-shadow: 0 0 0 2px #d4e9ff;
+
+  
+}
+.wanted:hover,.current-currency:hover {
+    box-shadow: 0 0 0 2px #d4e9ff;
+}
+::selection {
+    background: rgb(66, 66, 66);
+}
+::placeholder {
+    color: whitesmoke;
+}
+
+[contenteditable] {
+    cursor: pointer;
+}
+
+input, button {
+    margin:0;
+	border:0;
+	padding:0;
+	display:inline-block;
+	vertical-align:middle;
+	white-space:normal;
+	background:none;
+	line-height:1;
+    font-size: 100%;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+input:focus
+{
+	outline:0;
+}
+
+@media (max-width:480px) {
+    #app {
+        padding: 0 8px!important;
+    }
+    .shop-info {
+        grid-template-columns: 1fr 6rem 4rem 1rem!important;
+    }
+    .header {
+        grid-template-columns: 3rem 1fr 3rem 3rem 3rem!important;
+    }
+
+    .item {
+        grid-template-columns: 3rem 1fr 2.5rem 2rem 3rem 3rem 2.5rem!important;
+    }
+    .item-info, .item {
+        margin: 10px 0 0 0!important;
+    }
+    .price-image {
+        padding: 0!important;
+    }
+
+    
+
+}
+
+@media (max-width:640px) {
+    .top {
+        grid-template-columns: 100%!important;
+
+    }
+    .characters {
+        margin-top: 1rem;
+        grid-template-columns: 100%!important;
+        
+    }
+    .character{
+        grid-column: 1!important;
+        
+    }
+}
+/***********************************/
+
+#app {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 100%;
+    text-align: center;
+    padding: 0 16px;
+}
+
+
+.banner {
+    background-image: url('/img/neo_banner.jpg');
+    background-repeat: no-repeat;
+    background-position: 49.5% 50%;
+    height: 160px;
+    margin: 1rem 0;
+    border-radius: 1.3rem;
+    background-size: cover;
+    box-shadow: 0 0 0 2px var(--bordercolor);
+    
+}
+
+/** SHOP **/
+
+.shop {
+    margin-bottom: 0.8rem;
+}
+    .shop-info {
+        display: grid;
+        grid-template-columns: 1fr 5rem 6rem 2rem;
+        margin:  0 0 0.8rem 0;
+        background-color: var(--darkest);
+        border-radius: 1.3rem;
+        padding: 0.625rem 0;
+        box-shadow: 0 0 0 2px var(--bordercolor);
+
+    }
+    .header {
+        display: grid;
+        grid-template-columns: 3rem 1fr 5rem 6rem 2rem;
+        background-color: var(--darkest);
+        border-radius: 1.3rem;
+        box-shadow: 0 0 0 2px var(--bordercolor);
+
+    }
+        .header > div {
+        padding: 0.625rem 0;
+
+        }
+        .header img {
+            margin: auto;
+        }
+        .current-currency {
+            background-color: var(--red);
+        }
+
+        
+    .toggle{
+        user-select:none;
+        cursor: pointer;
+        color: var(--purple);
+        font-size: 150%;
+        text-indent: -1rem;
+        
+    }
+    .toggle:hover{
+        color: #bcdcf1;
+    }
+
+
+/** ITEMS **/
+.items.inactive {
+    display: none;
+}
+.item-info {
+    display: grid;
+    grid-template-columns: 1fr 5.5rem 5rem 5rem 1.5rem 1.25rem;
+    min-height: 2em;
+    margin: 0.8rem 0 0 3rem;
+    background-color: var(--darkest);
+    border-radius: 1.3rem;
+    box-shadow: 0 0 0 2px var(--bordercolor);
+
+}
+    .item-info .name {
+        padding-left: 3rem;
+    }
+
+
+    .item {
+        display: grid;
+        grid-template-columns: 3rem 1fr 4rem 3rem 5rem 5rem 2.5rem;
+        margin: 0.8rem 0 0 3rem;
+        background-color: var(--darkest);
+        border-radius: 1.3rem;
+        position: relative;
+        min-height: 3rem;
+        box-shadow: 0 0 0 2px var(--bordercolor);
+
+    }
+    .item > div {
+        padding: 0.625rem 0;
+    }
+    .item img {
+        margin: auto;
+        display: block;
+    }
+    
+    .wanted {
+        background-color: var(--red);
+    }
+
+    .price {
+        justify-content: flex-end;
+    }
+
+    .price-image {
+        height: 24px!important;
+        padding-right: 8px;
+    }
+
+
+    .emptyStock {
+        background-color: var(--green);
+    }
+    .emptyStock .wanted {
+        background-color: var(--darkgreen);
+    }
+
+    .buyItem {
+        cursor: pointer;
+        text-align: left;
+    }
+    .buyItem:hover {
+        color: #78727e;
+        text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+    }
+
+
+
+/** SHOP and ITEM centering fixes **/
+.header div, .item div, .item-info div, .shop-info div {
+    display: grid;
+    align-items: center;
+}
+.name, .title {
+    text-align: left;
+}
+
+
+/** ADD CHAR INPUT **/
+
+
+button {
+    min-height: 3rem;
+    margin: 0 10px 20px 0;
+    background-color: rgb(75, 7, 16);
+    color: whitesmoke;
+    padding: 0 20px;
+    cursor: pointer;
+    border-radius: 1.3rem;
+    
+}
+.active {
+    background-color: var(--purple) !important
+}
+
+
+#addCharacter {
+    grid-column: 1 / 3;
+    text-align: left;
+
+}
+
+#addCharacter input {
+    background-color: rgb(75, 7, 16);
+    height: 3rem;
+    width: 3rem;
+    border-radius: 1.3rem;
+    transition: all 1s;
+    text-indent: 1.2rem;
+    box-shadow: 0 0 0 2px var(--bordercolor);
+
+}
+
+#addCharacter input:hover {
+    background-color: var(--purple);
+    color: whitesmoke;
+    cursor: pointer;
+}
+#addCharacter input:focus {
+    cursor: text;
+    color: whitesmoke;
+    width: 100%;
+    box-shadow: 0 0 0 2px #d4e9ff;
+}
+
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: rgb(102, 97, 110);
+    text-align: left;
+    border-radius: 1.3rem;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    padding: 1rem;
+    width: 16rem;
+  }
+  
+
+  
+  .name:hover + .tooltiptext {
+    visibility: visible;
+  }
+
+.top {
+    display: grid;
+    grid-template-columns: 9.7rem 1fr;
+    gap: 0 1rem;
+    margin: 20px auto;
+
+}
+
+
+#time {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    text-align: left;
+    background-color: var(--darkest);
+    border-radius: 1.3rem;
+    padding: 1rem;
+    gap: 0 0.5rem;
+    align-content: center;
+    box-shadow: 0 0 0 2px var(--bordercolor);
+
+
+}
+.timeleft{
+    grid-column: 1 / 3;
+    padding-bottom: 0.5rem;
+}
+
+.characters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem 0.7rem;
+}
+.character {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: 1.3rem;
+    background-color: var(--darkest);
+    align-items: center;
+    grid-column: auto;
+    transition: all 0.5s;
+    box-shadow: 0 0 0 2px var(--bordercolor);
+
+}
+
+.character.active{
+    grid-template-columns: 1fr 2.5rem 3rem;
+}
+
+.character > div {
+   padding: 1rem 0;
+}
+
+.char-name {
+    text-align: left;
+    padding-left: 1rem!important;
+}
+
+.character.active:hover {
+    cursor:default;
+}
+
+.character:hover{
+    cursor: pointer;
+    background-color: var(--purple)!important;
+    
+
+}
+
+.character.active > .char-delete:hover {
+    cursor: pointer;
+    color: rgb(255, 107, 107);
+    text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+}
+
+.character.active > .char-edit:hover {
+    cursor: pointer;
+    color: rgb(33, 168, 5);
+    text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+
+}
+
+#char-to-delete {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.726);
+    z-index: 999;
+}
+
+.confirm {
+    border: #bbb0c7;
+    border-style: solid;
+    width: 20rem;
+    background-color: var(--darkest);
+    top: 40%;
+    position: relative;
+    margin: auto;
+    border-radius: 1.3rem;
+}
+.popupButton {
+    border: #bbb0c7;
+    border-style: solid;
+    padding: 0.33rem 0;
+    font-weight: bold;
+    border-radius: 1.3rem;
+    cursor: pointer;
+    background-color: var(--red);
+    width: 6rem;
+    display: inline-block;
+    margin: 1rem 0.5rem;
+}
+
+.popupButton:hover {
+    background-color: var(--purple);
+    border-color: #e0dae7;
+
+}
+
+.buyTitle {
+    margin: 1rem;
+}
+#amountToBuy {
+    padding: 0.5rem;
+    background-color: rgb(75, 7, 16);
+    width: 2rem;
+    margin: 0 auto;
+    box-shadow: 0 0 0 3px #bbb0c7;
+}
+
+#amountToBuy:hover {
+    box-shadow: 0 0 0 3px #d4e9ff;
+
+}
+.char-name {
+    transition: all 0.5s;
+}
+.char-name:focus{
+    border-radius: inherit;
+    background-color: var(--purple);
+    box-shadow: 0 0 0 3px #d4e9ff;
+}
+
+.refreshStock {
+    top: 1rem;
+    right: 1.5rem;
+    position: absolute;
+}
+
+.refreshStock:hover {
+    color:rgb(255, 107, 107);
+    text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+
+}
+
+#item-to-reset {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
