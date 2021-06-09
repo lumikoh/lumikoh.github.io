@@ -1,5 +1,4 @@
 :root {
-    --test: calc(100% - 50px);
     --darkest: rgb(28, 3, 6);
     --red: rgb(75, 7, 16);
     --purple: rgb(116,30,57);
@@ -28,12 +27,6 @@ html, body {
     background-attachment: fixed;
 }
 
-
-#time span {
-    padding-left: 0.25rem;
-    
-
-}
 
 img {
     user-select: none;
@@ -92,6 +85,9 @@ input:focus
 
     .item {
         grid-template-columns: 3rem 1fr 2.5rem 2rem 3rem 3rem 2.5rem!important;
+    }
+    .item-info {
+        grid-template-columns: 1fr 3rem 4rem 3rem 2rem 0.5rem !important
     }
     .item-info, .item {
         margin: 10px 0 0 0!important;
@@ -270,19 +266,6 @@ input:focus
 }
 
 
-/** ADD CHAR INPUT **/
-
-
-button {
-    min-height: 3rem;
-    margin: 0 10px 20px 0;
-    background-color: rgb(75, 7, 16);
-    color: whitesmoke;
-    padding: 0 20px;
-    cursor: pointer;
-    border-radius: 1.3rem;
-    
-}
 .active {
     background-color: var(--purple) !important
 }
@@ -318,23 +301,6 @@ button {
 }
 
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    background-color: rgb(102, 97, 110);
-    text-align: left;
-    border-radius: 1.3rem;
-    position: absolute;
-    z-index: 1;
-    top: 100%;
-    padding: 1rem;
-    width: 16rem;
-  }
-  
-
-  
-  .name:hover + .tooltiptext {
-    visibility: visible;
-  }
 
 .top {
     display: grid;

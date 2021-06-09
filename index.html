@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
-    <link rel="stylesheet" href="style.css?version=0.502">
+    <link rel="stylesheet" href="style.css?version=0.6">
     <script src="script_v3.js" defer></script>
     <script src="vue.global.prod.js"></script>
     <script src="https://kit.fontawesome.com/77eeb2afe3.js" crossorigin="anonymous"></script>
@@ -66,10 +66,9 @@
                         <div>Stock</div>
                         <div>Buy</div>
                     </div>
-                    <div class="item tooltip" v-for="item in SHARED_neoCoreItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
+                    <div class="item" v-for="item in SHARED_neoCoreItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
                         <img :src="item.image" alt="?">
                         <div class="name">{{ item.name }}</div>
-                        <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
                         <div class="price">{{ item.cost }}</div>
                         <img class="price-image" src="img/neo-core.png">
                         <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
@@ -99,7 +98,6 @@
                     <div class="item" v-for="item in SHARED_mesoItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
                         <img :src="item.image" alt="?">
                         <div class="name">{{ item.name }}</div>
-                        <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
                         <div class="price">{{ abbreviateNumber(item.cost) }}</div>
                         <img class="price-image" src="img/meso.png">
                         <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
@@ -132,7 +130,6 @@
                         <div class="item" v-for="item in character.PER_CHARACTER_neoGemItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
                             <img :src="item.image" alt="?">
                             <div class="name">{{ item.name }}</div>
-                            <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
                             <div class="price">{{ item.cost }}</div>
                             <img class="price-image" src="img/neo-gem.png">
                             <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
@@ -162,7 +159,6 @@
                         <div class="item" v-for="item in character.PER_CHARACTER_neoStoneItems" :key="item.id" :class="{ emptyStock: isStockEmpty(item) }">
                             <img :src="item.image" alt="?">
                             <div class="name">{{ item.name }}</div>
-                            <span v-if="item.desc" class="tooltiptext">{{ item.desc }}</span>
                             <div class="price">{{ item.cost }}</div>
                             <img class="price-image" src="img/neo-stone.png">
                             <div class="wanted" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" @blur="editItemWanted(item, $event)" @keydown.enter.prevent="editItemWanted(item, $event)">{{ item.wanted }}</div>
@@ -202,10 +198,6 @@
             </div>
         </div>
 
-        
-
-        
-        
     </div>
 </body>
 </html>
