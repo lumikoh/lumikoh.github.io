@@ -188,7 +188,7 @@
             <div class="confirm">
                 <div class="buyTitle">Amount to buy :</div>
                 <div class="refreshStock fas fa-redo-alt" @pointerdown="showResetStockOverlay()" title="Reset stock"></div>
-                <div id="amountToBuy" @blur="editItemWanted(activeItem, $event)" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" tabindex="0"></div>
+                <div id="amountToBuy" @blur="editItemBought(activeItem, $event)" @focus="autoHighlight($event)" onkeypress="return isNumber(event)" contenteditable="true" tabindex="0"></div>
                 <div id="buyButton" @pointerdown="buyItem()" class="popupButton">Buy</div>
                 <div id="cancelButton" @pointerdown="hideOverlay('overlay-purchase')" class="popupButton">Cancel</div>
             </div>

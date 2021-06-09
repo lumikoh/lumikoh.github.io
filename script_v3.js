@@ -173,7 +173,7 @@ const app = Vue.createApp({
             document.getElementById('amountToBuy').blur()
 
             let item = this.activeItem
-            const amount = item.wanted
+            let amount = parseInt(document.getElementById('amountToBuy').textContent, 10)
 
             this.hideOverlay('overlay-purchase')
             if(item.limit === "Unlimited") {
@@ -182,8 +182,7 @@ const app = Vue.createApp({
             }
             
             if(!this.isSharedStoneItem(item)) {
-                
-                
+
                 if(item.restock === "weekly") {
                     item.bought = Math.min(item.bought + amount, item.limit * weeksLeft + 1)
                     item.wanted = Math.max(item.wanted - amount, 0)
@@ -368,6 +367,22 @@ const app = Vue.createApp({
                     item.wanted = parsed    
                 }
             } 
+            event.target.blur()
+        },
+        editItemBought(item, event) {
+
+            const input = event.target.textContent
+            const parsed = parseInt(input, 10)
+            if (isNaN(parsed)) {
+                event.target.textContent = 0
+            }
+            else {
+                let remaining = this.calculateLimit(item);
+                if(item.limit !== "Unlimited" && parsed >= remaining) {
+                    event.target.textContent = remaining
+                }
+
+            }
             event.target.blur()
         },
         editCurrentCurrency(event, currency, character)
