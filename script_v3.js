@@ -184,15 +184,15 @@ const app = Vue.createApp({
             const charIndex = this.getCurrentCharIndex()
 
             if(item.currency === "Neo Stone") {
-                this.SHARED_characters[charIndex].currentStones -= Math.max(item.cost * amount, 0)
+                this.SHARED_characters[charIndex].currentStones = Math.max(this.currentCores - (item.cost * amount), 0)
             }
 
             if(item.currency === "Neo Gem") {
-                this.SHARED_characters[charIndex].currentGems -= Math.max(item.cost * amount, 0)
+                this.SHARED_characters[charIndex].currentGems = Math.max(this.currentCores - (item.cost * amount), 0)
             }
 
             if(item.currency === "Neo Core") {
-                this.currentCores -= Math.max(item.cost * amount, 0)
+                this.currentCores = Math.max(this.currentCores - (item.cost * amount), 0)
             }
 
             
