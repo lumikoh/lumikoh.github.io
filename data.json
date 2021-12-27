@@ -524,7 +524,7 @@
   {
     "name": "Dark Dome",
     "currency": "Neo Gem",
-    "cost": "200",
+    "cost": "500",
     "limit": "1",
     "restock": "no",
     "perCharacter": true,
@@ -533,7 +533,7 @@
   {
     "name": "Emerald Dome",
     "currency": "Neo Gem",
-    "cost": "200",
+    "cost": "500",
     "limit": "1",
     "restock": "no",
     "perCharacter": true,
