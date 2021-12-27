@@ -524,7 +524,7 @@ const app = Vue.createApp({
     }
 })
 
-setInterval(timeLeft, 1000)
+const timeLeftInterval = setInterval(timeLeft, 1000)
 
 
 
@@ -532,6 +532,11 @@ function timeLeft() {
     let date = new Date()
     let endDate = new Date(Date.UTC(2021,7,24,23,59,59))
     let timeRemaining = endDate - date
+    if (timeRemaining < 0) {
+        timeRemaining = 0
+        clearInterval(timeLeftInterval)
+    }
+
     let seconds = (timeRemaining /1000) | 0
     let minutes = (seconds / 60) | 0
     seconds -= minutes * 60
